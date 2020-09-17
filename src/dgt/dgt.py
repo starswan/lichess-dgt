@@ -1,7 +1,7 @@
 from dgt.dgtnix import *
 
 import select
-import chess
+# import chess
 
 class DgtBoard:
     def __init__(self, portname):
@@ -16,7 +16,10 @@ class DgtBoard:
         self.__poll_obj = select.poll()
         self.__poll_obj.register(self.__pipe)
         self.__dgtdrv.update()
-        print(self.__dgtdrv.getFen('w').decode('utf-8'))
+        print('FEN:' + self.__dgtdrv.getFen('w').decode('utf-8'))
+
+    def pipe(self):
+        return self.__pipe
 
     def poll(self, timeout_in_ms):
         self.__poll_obj.poll(timeout_in_ms)
