@@ -21,8 +21,5 @@ class DgtBoard:
     def pipe(self):
         return self.__pipe
 
-    def poll(self, timeout_in_ms):
-        self.__poll_obj.poll(timeout_in_ms)
-
     def Close(self):
         self.__dgtdrv.Close()

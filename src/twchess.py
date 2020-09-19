@@ -7,19 +7,17 @@
 # sp that they co-operate nicely
 
 import dgt.dgt
-import berserk
+# import berserk
 # import asyncio
 # from lichess_client import APIClient
-from twisted.internet import reactor, abstract, fdesc
-from twisted.web.client import Agent, ResponseDone
-from twisted.internet.protocol import Protocol
-from twisted.internet.defer import Deferred
+from twisted.internet import reactor
+from twisted.web.client import Agent
 from twisted.web.http_headers import Headers
 from twisted.web.iweb import UNKNOWN_LENGTH
 from twisted import version
 from twisted.python import log
 from pprint import pprint
-import sys
+# import sys
 
 # lichess = berserk.Client(berserk.TokenSession(token), base_url="https://lichess.dev")
 # async def main():
@@ -39,67 +37,8 @@ import sys
 # Think I need to look at twisted.
 # for event in lichess.board.stream_incoming_events():
 #     pass
-from dgt.dgtnix import dgtnix
-
-
-class WriteToStdout(Protocol):
-    def __init__(self, prefix):
-        self.__prefix = prefix
-
-    def connectionMade(self):
-        self.onConnLost = Deferred()
-
-    def dataReceived(self, data):
-        """
-        Print out the html page received.
-        """
-        print('%s Got %d bytes:[%s]' % (self.__prefix, len(data), data))
-
-    def connectionLost(self, reason):
-        if not reason.check(ResponseDone):
-            reason.printTraceback()
-        else:
-            print(self.__prefix + ' Response done')
-        self.onConnLost.callback(None)
-
-class BoardDataReceived(Protocol):
-    def __init__(self, client):
-        self.__client = client
-
-    def dataReceived(self, data):
-        print('Got %d bytes:[%s]' % (len(data), data))
-        if data[0] == dgtnix.DGTNIX_MSG_MV_ADD:
-            file = chr(data[1])
-            rank = data[2]
-            piece = chr(data[3])
-            print("Engine received DGTNIX_MSG_MV_ADD (%s on %s%d)" % (piece, file, rank))
-            # self.__client.pieceAdded(piece, rank, file)
-        elif data[0] == dgtnix.DGTNIX_MSG_MV_REMOVE:
-            file = chr(data[1])
-            rank = data[2]
-            piece = chr(data[3])
-            print("Engine received DGTNIX_MSG_MV_REMOVE (%s on %s%d)" % (piece, file, rank))
-
-class TwistedRawSocket(abstract.FileDescriptor):
-    def __init__(self, reactor, protocol, fd):
-        super().__init__(reactor)
-        self.__protocol = protocol
-        self.__protocol.makeConnection(self)
-        self.__fd = fd
-        self.startReading()
-
-    def fileno(self):
-        return self.__fd
-
-    def doRead(self):
-        return fdesc.readFromFD(self.fileno(), self.__protocol.dataReceived)
-
-    def writeSomeData(self, data):
-        return fdesc.writeToFD(self.fileno(), data)
-
-    def connectionLost(self, reason):
-        abstract.FileDescriptor.connectionLost(self, reason)
-        self.__protocol.connectionLost(reason)
+from twisteddgt.board_protocol import BoardDataReceived, WriteToStdout
+from twisteddgt.raw_socket import TwistedRawSocket
 
 GET_REQUEST = bytes('GET', 'utf-8')
 
@@ -136,4 +75,6 @@ def main(reactor, portname, tokenfile, url):
 
 if __name__ == '__main__':
     main(reactor, portname='/dev/ttyUSB0', tokenfile='lichess.org.token', url='https://lichess.org')
+    # or
+    # main(reactor, portname='/dev/ttyUSB0', tokenfile='lichess.dev.token', url='https://lichess.dev')
     # main(reactor, *sys.argv[1:], token)
