@@ -2,7 +2,7 @@ from twisted.internet.defer import Deferred
 from twisted.internet.protocol import Protocol
 from twisted.web._newclient import ResponseDone
 
-from dgt.dgtnix import dgtnix
+from dgtc.dgtnix import dgtnix
 
 class WriteToStdout(Protocol):
     def __init__(self, prefix):

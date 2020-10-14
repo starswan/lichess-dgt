@@ -26,7 +26,7 @@ import time
 
 from dgt.util import DgtAck, DgtClk, DgtCmd, DgtMsg, ClockIcons, ClockSide, enum
 from dgt.api import Message, Dgt
-from utilities import RepeatedTimer, DisplayMsg, hms_time
+from dgt.utilities import RepeatedTimer, DisplayMsg, hms_time
 
 
 class DgtBoard(object):

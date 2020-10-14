@@ -1,4 +1,4 @@
-from dgt.dgtnix import *
+from dgtc.dgtnix import *
 
 import select
 # import chess
