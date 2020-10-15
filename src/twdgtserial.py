@@ -6,17 +6,19 @@
 #
 # sp that they co-operate nicely
 
-import dgtc.dgt
 # import berserk
 # import asyncio
 # from lichess_client import APIClient
+from serial import STOPBITS_ONE, PARITY_NONE, EIGHTBITS
 from twisted.internet import reactor
+from twisted.internet._posixserialport import SerialPort
 from twisted.web.client import Agent
 from twisted.web.http_headers import Headers
 from twisted.web.iweb import UNKNOWN_LENGTH
 from twisted import version
 from twisted.python import log
 from pprint import pprint
+import dgt
 # import sys
 
 # lichess = berserk.Client(berserk.TokenSession(token), base_url="https://lichess.dev")
@@ -37,18 +39,19 @@ from pprint import pprint
 # Think I need to look at twisted.
 # for event in lichess.board.stream_incoming_events():
 #     pass
-from twisteddgt.board_protocol import BoardDataReceived, WriteToStdout
-from twisteddgt.raw_socket import TwistedRawSocket
+from twisteddgt.board_protocol import WriteToStdout
+from twisteddgt.raw_protocol import RawBoardDataReceived
+# from twisteddgt.raw_socket import TwistedRawSocket
 
 GET_REQUEST = bytes('GET', 'utf-8')
 
 def main(reactor, portname, tokenfile, url):
-    dgtboard = dgtc.dgt.DgtBoard(portname=portname)
+    dgtboard = dgt.board.DgtBoard(portname, False, False, False)
 
     with open(tokenfile) as f:
         token = f.read().strip()
 
-    twisted_dgt = TwistedRawSocket(reactor, BoardDataReceived(None), dgtboard.pipe())
+    twisted_dgt = SerialPort(RawBoardDataReceived(dgtboard), portname, reactor, stopbits=STOPBITS_ONE, parity=PARITY_NONE, bytesize=EIGHTBITS)
     url = bytes(url + '/api/stream/event', 'utf-8')
 
     userAgent = 'Twisted/%s' % (version.short(),)
@@ -74,7 +77,7 @@ def main(reactor, portname, tokenfile, url):
     reactor.run()
 
 if __name__ == '__main__':
-    main(reactor, portname='/dev/ttyUSB0', tokenfile='lichess.org.token', url='https://lichess.org')
+    # main(reactor, portname='/dev/ttyUSB0', tokenfile='lichess.org.token', url='https://lichess.org')
     # or
-    # main(reactor, portname='/dev/ttyUSB0', tokenfile='lichess.dev.token', url='https://lichess.dev')
+    main(reactor, portname='/dev/ttyUSB0', tokenfile='lichess.dev.token', url='https://lichess.dev')
     # main(reactor, *sys.argv[1:], token)
