@@ -11,7 +11,7 @@
 # from lichess_client import APIClient
 from serial import STOPBITS_ONE, PARITY_NONE, EIGHTBITS
 from twisted.internet import reactor
-from twisted.internet._posixserialport import SerialPort
+from twisted.internet.serialport import SerialPort
 from twisted.web.client import Agent
 from twisted.web.http_headers import Headers
 from twisted.web.iweb import UNKNOWN_LENGTH
