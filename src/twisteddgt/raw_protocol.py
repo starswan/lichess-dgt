@@ -1,3 +1,6 @@
+import logging
+import struct
+
 from twisted.internet.protocol import Protocol
 
 class RawBoardDataReceived(Protocol):
