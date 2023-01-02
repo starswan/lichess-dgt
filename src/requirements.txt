@@ -2,6 +2,6 @@ python-chess==0.24.1
 async-lichess-sdk==1.1.0.7
 berserk>=0.8.0
 twisted==22.8.0
-pyOpenSSL==19.1.0
+pyOpenSSL==23.0.0
 service_identity==18.1.0
 pyserial==3.4
