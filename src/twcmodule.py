@@ -37,8 +37,9 @@ from pprint import pprint
 # Think I need to look at twisted.
 # for event in lichess.board.stream_incoming_events():
 #     pass
-from twisteddgt.board_protocol import BoardDataReceived, WriteToStdout
+from twisteddgt.board_protocol import BoardDataReceived
 from twisteddgt.raw_socket import TwistedRawSocket
+from twisteddgt.write_to_stdout import WriteToStdout
 
 GET_REQUEST = bytes('GET', 'utf-8')
 
