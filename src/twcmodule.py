@@ -75,7 +75,7 @@ def main(reactor, portname, tokenfile, url):
     reactor.run()
 
 if __name__ == '__main__':
-    main(reactor, portname='/dev/ttyUSB0', tokenfile='lichess.org.token', url='https://lichess.org')
+    # main(reactor, portname='/dev/ttyUSB0', tokenfile='tokens/lichess.org.token', url='https://lichess.org')
     # or
-    # main(reactor, portname='/dev/ttyUSB0', tokenfile='lichess.dev.token', url='https://lichess.dev')
+    main(reactor, portname='/dev/ttyUSB0', tokenfile='tokens/lichess.dev.token', url='https://lichess.dev')
     # main(reactor, *sys.argv[1:], token)

@@ -13,5 +13,7 @@ The DGT Board is (for now) being driven using the DGT Posix driver (written in '
 a simple Python shim. In future this could be replaced with a native Python driver. 
 The current implementation actually uses a thread to comminicate with the board itself, but
 then creates a unix domain socket (half of which is returned from the Init() method) onto
-which actual board change messages are published.      
+which actual board change messages are published.  
+
+python3 src/twcmodule.py (with LD_LIBRARY_PATH pointing at the directory containing libdgtnix.so)
  

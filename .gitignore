@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 /src/lichess.dev.token
 /src/lichess.org.token
+/tokens/lichess.org.token
+/tokens/lichess.dev.token
