@@ -3,5 +3,5 @@ async-lichess-sdk==1.1.0.7
 berserk>=0.8.0
 twisted==22.10.0
 pyOpenSSL==23.1.1
-service_identity==18.1.0
+service_identity==21.1.0
 pyserial==3.5
