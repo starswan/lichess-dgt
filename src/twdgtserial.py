@@ -39,9 +39,9 @@ import dgt
 # Think I need to look at twisted.
 # for event in lichess.board.stream_incoming_events():
 #     pass
-from twisteddgt.board_protocol import WriteToStdout
 from twisteddgt.raw_protocol import RawBoardDataReceived
 # from twisteddgt.raw_socket import TwistedRawSocket
+from twisteddgt.write_to_stdout import WriteToStdout
 
 GET_REQUEST = bytes('GET', 'utf-8')
 
