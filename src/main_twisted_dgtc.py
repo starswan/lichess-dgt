@@ -63,11 +63,11 @@ def main(reactor, portname, tokenfile, url):
         Prints out the response returned by the web server.
         """
         pprint(vars(response))
-        proto = WriteToStdout('URL:')
-        if response.length is not UNKNOWN_LENGTH:
-            print('The response body will consist of', response.length, 'bytes.')
-        else:
-            print('The response body length is unknown.')
+        proto = WriteToStdout('WEB:')
+        # if response.length is not UNKNOWN_LENGTH:
+        #     print('WEB: The response body will consist of', response.length, 'bytes.')
+        # else:
+        #     print('WEB: The response body length is unknown.')
         response.deliverBody(proto)
         return proto.onConnLost
     d.addCallback(cbResponse)
@@ -76,7 +76,7 @@ def main(reactor, portname, tokenfile, url):
     reactor.run()
 
 if __name__ == '__main__':
-    # main(reactor, portname='/dev/ttyUSB0', tokenfile='tokens/lichess.org.token', url='https://lichess.org')
+    main(reactor, portname='/dev/ttyUSB0', tokenfile='tokens/lichess.org.token', url='https://lichess.org')
     # or
-    main(reactor, portname='/dev/ttyUSB0', tokenfile='tokens/lichess.dev.token', url='https://lichess.dev')
+    # main(reactor, portname='/dev/ttyUSB0', tokenfile='tokens/lichess.dev.token', url='https://lichess.dev')
     # main(reactor, *sys.argv[1:], token)
