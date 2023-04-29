@@ -49,7 +49,8 @@ def main(reactor, portname, tokenfile, url):
     with open(tokenfile) as f:
         token = f.read().strip()
 
-    twisted_dgt = TwistedRawSocket(reactor, BoardDataReceived(None), dgtboard.pipe())
+    board_receiver = BoardDataReceived(None)
+    twisted_dgt = TwistedRawSocket(reactor, board_receiver, dgtboard.pipe())
     url = bytes(url + '/api/stream/event', 'utf-8')
 
     userAgent = 'Twisted/%s' % (version.short(),)
